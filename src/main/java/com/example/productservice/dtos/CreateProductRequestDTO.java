@@ -1,0 +1,33 @@
+package com.example.productservice.dtos;
+
+import com.example.productservice.models.Product;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CreateProductRequestDTO {
+    private String productTitle;
+    private double productPrice;
+    private String productDescription;
+    private String ProductCategory;
+    private String productImage;
+
+    public Product toProduct(){
+        Product product = new Product();
+        product.setProductTitle(this.productTitle);
+        product.setProductPrice(this.productPrice);
+        product.setProductDescription(this.productDescription);
+        product.setProductCategory(this.ProductCategory);
+        product.setProductImage(this.productImage);
+        return product;
+    }
+}
+
+/**
+ * This is CreateProductRequestDTO class which will be used to create a new product.
+ * It contains the necessary fields that are required to create a product.
+ * It will be used in the ProductController to handle the request body when creating a new product.
+ * It is a Data Transfer Object (DTO) that will be used to transfer data between the client and the server.
+ * It is typically used to encapsulate the data that is sent in the request body when creating a new resource.
+ */
