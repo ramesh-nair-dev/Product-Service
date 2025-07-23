@@ -77,6 +77,16 @@ public class FakeApiProductService implements ProductService {
         return FakeStoreCreateProductResponseDTO.toProduct(responseDTO);
 
     }
+
+    @Override
+    public Product getSingleProduct(Long id) {
+        FakeStoreGetProductResponseDTO responseDTO = restTemplate.getForObject(
+                "https://fakestoreapi.com/products/" + id,
+                FakeStoreGetProductResponseDTO.class
+        );
+
+        return FakeStoreGetProductResponseDTO.toProduct(responseDTO);
+    }
 }
 
 /**
