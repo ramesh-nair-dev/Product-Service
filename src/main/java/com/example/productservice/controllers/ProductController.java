@@ -76,6 +76,11 @@ public class ProductController {
         // This method will delete the product with the given id
         // We will use @PathVariable to get the id from the url
         // and then we will delete the product from the database or any other source
+        // We will use the ProductService to delete the product by id
+        productService.deleteProduct(id);
+
+
+
     }
 
     @PatchMapping("/{id}")

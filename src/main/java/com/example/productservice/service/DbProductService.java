@@ -26,4 +26,9 @@ public class DbProductService implements ProductService {
     public Product getSingleProduct(Long id) {
         return null;
     }
+
+    @Override
+    public void deleteProduct(Long id) {
+
+    }
 }
