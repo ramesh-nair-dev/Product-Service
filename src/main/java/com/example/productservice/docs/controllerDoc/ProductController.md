@@ -30,7 +30,7 @@ This controller exposes endpoints to:
 
 ### 1. Create a Product
 
-- **HTTP Method:** `POST`  
+- **HTTP Method:** `POST`
 - **Endpoint:** `/products`
 - **Annotation:** `@PostMapping("/products")`
 
