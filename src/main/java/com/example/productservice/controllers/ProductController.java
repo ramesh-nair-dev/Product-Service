@@ -1,9 +1,6 @@
 package com.example.productservice.controllers;
 
-import com.example.productservice.dtos.product.GetAllProductResponseDTO;
-import com.example.productservice.dtos.product.CreateProductRequestDTO;
-import com.example.productservice.dtos.product.CreateProductResponseDTO;
-import com.example.productservice.dtos.product.GetProductDTO;
+import com.example.productservice.dtos.product.*;
 import com.example.productservice.models.Product;
 import com.example.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -25,7 +23,7 @@ public class ProductController {
         this.productService = (ProductService) context.getBean(serviceName);
     }
 
-    @PostMapping("/products")
+    @PostMapping("")
     public CreateProductResponseDTO createProduct(@RequestBody CreateProductRequestDTO createProductRequestDTO) {
         // This method will create a new product
         // We will use @PostMapping to handle POST requests
@@ -37,7 +35,7 @@ public class ProductController {
         return CreateProductResponseDTO.createProductResponseDTO(product);
     }
 
-    @GetMapping("/products")
+    @GetMapping("")
     public GetAllProductResponseDTO getAllProducts(){
         // This method will return all the products
         // We will use @GetMapping to handle GET requests
@@ -61,7 +59,7 @@ public class ProductController {
         return responseDTO;
     }
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
     public void getProduct(@PathVariable("id") Long id){
         // This method will return the product with the given id
         // We will use @PathVariable to get the id from the url
@@ -69,11 +67,27 @@ public class ProductController {
 
     }
 
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable("id") Long id){
         // This method will delete the product with the given id
         // We will use @PathVariable to get the id from the url
         // and then we will delete the product from the database or any other source
+    }
+
+    @PatchMapping("/{id}")
+    public GetProductDTO updateProduct(@PathVariable("id") Long id, @RequestBody CreateProductDTO createProductDTO){
+        // This method will update the product with the given id
+        // We will use @PathVariable to get the id from the url
+        // and then we will update the product in the database or any other source
+        // The request body will contain the updated details of the product
+        // We will use the ProductService to update the product
+        // and then return the updated product in the response body
+        // We will use the CreateProductDTO to map the request body to the Product model
+
+        Product updatedProduct = productService.updateProduct(id, CreateProductDTO.toProduct(createProductDTO));
+
+        return GetProductDTO.fromProduct(updatedProduct);
+
     }
 
 }
@@ -89,6 +103,15 @@ public class ProductController {
  *  - Let's say we want to get all product from the Fake Store API, we will create a DTO named FakeStoreGetAllProductsResponseDTO
  *  - Inside FakeStoreGetAllProductsResponseDTO we will have a list of GetProductDTO
  *  - GetProductDTO will have the same fields as the Product model which will used to display the product details
+ *
+ * Now we implement PatchMapping suppose we have a product with some id we need to update the product
+ *  - We will use @PatchMapping to handle the PATCH request
+ *  - We will use @PathVariable to get the id from the url
+ *  - We will use @RequestBody to get the updated product details from the request body
+ *  - We will use the ProductService to update the product
+ *  - We will return the updated product in the response body ,we will send for this product id , i want to change these
+ *    details like product title, product price, product description, product category, product image etc in createProductDTO
+ *
  *
  */
 

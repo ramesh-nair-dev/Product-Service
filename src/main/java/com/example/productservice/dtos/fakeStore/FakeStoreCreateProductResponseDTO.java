@@ -1,5 +1,6 @@
 package com.example.productservice.dtos.fakeStore;
 
+import com.example.productservice.models.Product;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +13,19 @@ public class FakeStoreCreateProductResponseDTO {
     private String description;
     private String category;
     private String image;
-}
+
+  public static Product toProduct(FakeStoreCreateProductResponseDTO fakeStoreCreateProductResponseDTO) {
+        Product product = new Product();
+        product.setId(fakeStoreCreateProductResponseDTO.getId());
+        product.setProductTitle(fakeStoreCreateProductResponseDTO.getTitle());
+        product.setProductPrice(fakeStoreCreateProductResponseDTO.getPrice());
+        product.setProductDescription(fakeStoreCreateProductResponseDTO.getDescription());
+        product.setProductCategory(fakeStoreCreateProductResponseDTO.getCategory());
+        product.setProductImage(fakeStoreCreateProductResponseDTO.getImage());
+        return product;
+    }
+  }
+
 /**
  * This is FakeStoreCreateProductResponseDTO class which will be used to map the response from the Fake Store API when creating a new product.
  * It contains the necessary fields that are returned by the Fake Store API when a product is created.

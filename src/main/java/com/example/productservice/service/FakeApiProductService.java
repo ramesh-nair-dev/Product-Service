@@ -65,6 +65,18 @@ public class FakeApiProductService implements ProductService {
         return products;
 
     }
+
+    @Override
+    public Product updateProduct(Long id , Product product) {
+        FakeStoreCreateProductResponseDTO responseDTO = restTemplate.patchForObject(
+                "https://fakestoreapi.com/products/" + id,
+                FakeStoreCreateProductRequestDTO.fromProduct(product),
+                FakeStoreCreateProductResponseDTO.class
+        );
+
+        return FakeStoreCreateProductResponseDTO.toProduct(responseDTO);
+
+    }
 }
 
 /**

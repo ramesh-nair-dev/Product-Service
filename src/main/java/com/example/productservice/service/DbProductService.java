@@ -16,4 +16,9 @@ public class DbProductService implements ProductService {
     public List<Product> getAllProducts() {
         return List.of();
     }
+
+    @Override
+    public Product updateProduct(Long id , Product product) {
+        return null;
+    }
 }
