@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class Product extends BaseClass {
     private String productTitle;
-    private String productDescription;
     private double productPrice;
+    private String productDescription;
     private String productCategory;
     private String productImage;
 }
