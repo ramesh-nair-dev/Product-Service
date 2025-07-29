@@ -26,7 +26,7 @@ public class FakeApiProductService implements ProductService {
         requestDTO.setTitle(product.getProductTitle());
         requestDTO.setPrice(product.getProductPrice());
         requestDTO.setDescription(product.getProductDescription());
-        requestDTO.setCategory(product.getProductCategory());
+        requestDTO.setCategory(product.getCategory());
         requestDTO.setImage(product.getProductImage());
         FakeStoreCreateProductResponseDTO responseDTO = restTemplate.postForObject(
                 "https://fakestoreapi.com/products",
@@ -40,7 +40,7 @@ public class FakeApiProductService implements ProductService {
         newProduct.setProductTitle(responseDTO.getTitle());
         newProduct.setProductPrice(responseDTO.getPrice());
         newProduct.setProductDescription(responseDTO.getDescription());
-        newProduct.setProductCategory(responseDTO.getCategory());
+        newProduct.setCategory(responseDTO.getCategory());
         newProduct.setProductImage(responseDTO.getImage());
         return newProduct;
     }

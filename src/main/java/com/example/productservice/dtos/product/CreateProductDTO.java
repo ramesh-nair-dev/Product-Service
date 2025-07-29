@@ -1,5 +1,6 @@
 package com.example.productservice.dtos.product;
 
+import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,10 +16,12 @@ public class CreateProductDTO {
 
     public static Product toProduct(CreateProductDTO createProductDTO){
         Product product = new Product();
+        Category category = new Category();
         product.setProductTitle(createProductDTO.getProductTitle());
         product.setProductPrice(createProductDTO.getProductPrice());
         product.setProductDescription(createProductDTO.getProductDescription());
-        product.setProductCategory(createProductDTO.getProductCategory());
+        product.setCategory(category);
+        category.setCategoryName(createProductDTO.getProductCategory());
         product.setProductImage(createProductDTO.getProductImage());
         return product;
     }
