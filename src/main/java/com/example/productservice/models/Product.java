@@ -10,7 +10,7 @@ import lombok.Setter;
 @Entity
 public class Product extends BaseClass {
     private String productTitle;
-    private double productPrice;
+    private Double productPrice;
     private String productDescription;
     @ManyToOne
     private Category category;

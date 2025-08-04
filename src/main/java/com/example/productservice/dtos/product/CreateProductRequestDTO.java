@@ -11,7 +11,7 @@ public class CreateProductRequestDTO {
     private String productTitle;
     private double productPrice;
     private String productDescription;
-    private String productCategory;
+    private String productCategoryName;
     private String productImage;
 
     public Product toProduct(){
@@ -21,7 +21,7 @@ public class CreateProductRequestDTO {
         product.setProductPrice(this.productPrice);
         product.setProductDescription(this.productDescription);
         product.setCategory(category);
-        category.setCategoryName(this.productCategory);
+        category.setCategoryName(this.productCategoryName);
         product.setProductImage(this.productImage);
         return product;
     }

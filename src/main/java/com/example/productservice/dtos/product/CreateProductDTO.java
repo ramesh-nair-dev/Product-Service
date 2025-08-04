@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 public class CreateProductDTO {
     private String productTitle;
-    private double productPrice;
+    private Double productPrice;
     private String productDescription;
-    private String ProductCategory;
+    private String productCategoryName;
     private String productImage;
 
     public static Product toProduct(CreateProductDTO createProductDTO){
@@ -21,7 +21,7 @@ public class CreateProductDTO {
         product.setProductPrice(createProductDTO.getProductPrice());
         product.setProductDescription(createProductDTO.getProductDescription());
         product.setCategory(category);
-        category.setCategoryName(createProductDTO.getProductCategory());
+        category.setCategoryName(createProductDTO.getProductCategoryName());
         product.setProductImage(createProductDTO.getProductImage());
         return product;
     }
