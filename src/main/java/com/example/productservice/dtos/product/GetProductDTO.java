@@ -12,7 +12,7 @@ public class GetProductDTO {
     private String productTitle;
     private double productPrice;
     private String productDescription;
-    private Category category;
+    private String productCategoryName;
     private String productImage;
 
     public static GetProductDTO fromProduct(Product product) {
@@ -21,7 +21,7 @@ public class GetProductDTO {
         dto.setProductTitle(product.getProductTitle());
         dto.setProductPrice(product.getProductPrice());
         dto.setProductDescription(product.getProductDescription());
-        dto.setCategory(product.getCategory());
+        dto.setProductCategoryName(product.getCategory().getCategoryName());
         dto.setProductImage(product.getProductImage());
         return dto;
     }

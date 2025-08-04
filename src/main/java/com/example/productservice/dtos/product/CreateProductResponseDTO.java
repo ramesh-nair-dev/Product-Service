@@ -12,7 +12,7 @@ public class CreateProductResponseDTO {
     private String productTitle;
     private double productPrice;
     private String productDescription;
-    private Category category;
+    private String productCategoryName;
     private String productImage;
 
     public static CreateProductResponseDTO createProductResponseDTO(Product product) {
@@ -21,7 +21,7 @@ public class CreateProductResponseDTO {
         createProductResponseDTO.setProductTitle(product.getProductTitle());
         createProductResponseDTO.setProductPrice(product.getProductPrice());
         createProductResponseDTO.setProductDescription(product.getProductDescription());
-        createProductResponseDTO.setCategory(product.getCategory());
+        createProductResponseDTO.setProductCategoryName(product.getCategory().getCategoryName());
         createProductResponseDTO.setProductImage(product.getProductImage());
         return createProductResponseDTO;
     }
