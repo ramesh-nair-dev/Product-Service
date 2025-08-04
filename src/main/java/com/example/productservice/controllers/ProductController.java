@@ -78,9 +78,6 @@ public class ProductController {
         // and then we will delete the product from the database or any other source
         // We will use the ProductService to delete the product by id
         productService.deleteProduct(id);
-
-
-
     }
 
     @PatchMapping("/{id}")

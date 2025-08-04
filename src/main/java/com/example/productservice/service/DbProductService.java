@@ -107,11 +107,19 @@ public class DbProductService implements ProductService {
 
     @Override
     public Product getSingleProduct(Long id) {
-        return null;
+        Optional<Product> productOptional = productRepository.findById(id);
+        if(productOptional.isEmpty()){
+            throw  new RuntimeException("Product with id " + id + " not found");
+        }
+        return productOptional.get();
     }
 
     @Override
     public void deleteProduct(Long id) {
-
+        Optional<Product> productOptional = productRepository.findById(id);
+        if(productOptional.isEmpty()){
+            throw new RuntimeException("Product with id " + id + " not found");
+        }
+        productRepository.deleteById(id);
     }
 }
