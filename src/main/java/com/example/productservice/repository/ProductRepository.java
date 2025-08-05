@@ -2,6 +2,8 @@ package com.example.productservice.repository;
 
 import com.example.productservice.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,9 +14,10 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     // No additional methods are needed unless specific queries are required
     /**
      * What we want to achieve here is ?
-     * We want to get all product by Category name right but Product model has category object and that
+     * We want to get all product by Category name but Product model has category object and that
      * category object has name attribute
      */
+
     List<Product> findAllByCategory_CategoryName(String categoryName);
     // This method retrieves all products that belong to a specific category by its name
 
@@ -24,9 +27,15 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
      * SubCategory class has subCategoryName attribute
      * We can also write a method to get all products by subCategory name
      */
+
     List<Product> findAllByCategory_SubCategory_SubCategoryName(String subCategoryName);
     // This method retrieves all products that belong to a specific subcategory by its name
 
-
+    // We can write custom JPA queries if needed
+    @Query("select p from Product p where p.category.subCategory.subCategoryName = : subCategoryName")
+    List<Product> customJPAProductsBySubCategoryName(@Param("subCategoryName") String subCategoryName);
+    // This method uses a custom JPQL query to retrieve products by subcategory name
+    // It uses the @Query annotation to define the query and the @Param annotation to bind the method parameter to the query parameter
+    // The way we write the query is similar to SQL but uses entity names and attributes instead of table names and columns
 
 }
