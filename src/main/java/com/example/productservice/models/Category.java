@@ -2,6 +2,7 @@ package com.example.productservice.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,8 @@ public class Category extends BaseClass{
     private List<Product> allProducts;
     @OneToMany
     private List<Product> topProducts;
+    @OneToOne
+    private SubCategory subCategory;
 }
 
 /**
@@ -30,4 +33,5 @@ public class Category extends BaseClass{
  * This allows a category to have multiple products associated with it, both for all products and top products.
  *
  * See already mapped category in product entity , for allProducts we write mappedBy = "category" to indicate that the Product entity has a field named category that maps to this Category entity.
+ * For understanding the concept how query from an object attribute's attribute we created a subCategory object in Category class
  */

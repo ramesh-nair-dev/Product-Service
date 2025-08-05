@@ -117,8 +117,6 @@ public class ProductController {
  *  - We will use the ProductService to update the product
  *  - We will return the updated product in the response body ,we will send for this product id , i want to change these
  *    details like product title, product price, product description, product category, product image etc in createProductDTO
- *
- *
  */
 
 
