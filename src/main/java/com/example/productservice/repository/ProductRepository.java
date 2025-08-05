@@ -1,6 +1,7 @@
 package com.example.productservice.repository;
 
 import com.example.productservice.models.Product;
+import com.example.productservice.service.CustomQueries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -37,5 +38,13 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     // This method uses a custom JPQL query to retrieve products by subcategory name
     // It uses the @Query annotation to define the query and the @Param annotation to bind the method parameter to the query parameter
     // The way we write the query is similar to SQL but uses entity names and attributes instead of table names and columns
+
+    // We can also write custom native SQL queries if needed
+    @Query(value= CustomQueries.GET_ALL_PRODUCTS_BY_CATEGORY_NAME, nativeQuery = true)
+    List<Product> customNativeQuery(@Param("categoryName") String categoryName);
+    // This method uses a custom native SQL query to retrieve products by category name
+    // It uses the @Query annotation with nativeQuery = true to indicate that the query is a native SQL query
+    // The query is defined in the CustomQueries interface, which can be used to centralize custom queries
+    // The @Param annotation is used to bind the method parameter to the query parameter
 
 }
