@@ -5,6 +5,8 @@ import com.example.productservice.models.Product;
 import com.example.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public CreateProductResponseDTO createProduct(@RequestBody CreateProductRequestDTO createProductRequestDTO) {
+    public ResponseEntity<CreateProductResponseDTO> createProduct(@RequestBody CreateProductRequestDTO createProductRequestDTO) {
         // This method will create a new product
         // We will use @PostMapping to handle POST requests
         // and create a new product in the database or any other source
@@ -32,11 +34,11 @@ public class ProductController {
         // The request body will contain the details of the product to be created
 
         Product product = productService.createProduct(createProductRequestDTO.toProduct());
-        return CreateProductResponseDTO.createProductResponseDTO(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(CreateProductResponseDTO.fromProduct(product));
     }
 
     @GetMapping("")
-    public GetAllProductResponseDTO getAllProducts(){
+    public ResponseEntity<GetAllProductResponseDTO> getAllProducts(){
         // This method will return all the products
         // We will use @GetMapping to handle GET requests
         // and return a list of products from the database or any other source
@@ -56,32 +58,33 @@ public class ProductController {
         }
         responseDTO.setGetProductDTOList(responseList);
 
-        return responseDTO;
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
     @GetMapping("/{id}")
-    public GetProductDTO getSingleProduct(@PathVariable("id") Long id){
+    public ResponseEntity<GetProductDTO> getSingleProduct(@PathVariable("id") Long id){
         // This method will return the product with the given id
         // We will use @PathVariable to get the id from the url
         // and then we will return the product from the database or any other source
         // We will use the ProductService to get the product by id
 
         Product product = productService.getSingleProduct(id);
-        return GetProductDTO.fromProduct(product);
+        return ResponseEntity.status(HttpStatus.OK).body(GetProductDTO.fromProduct(product));
 
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable("id") Long id){
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id){
         // This method will delete the product with the given id
         // We will use @PathVariable to get the id from the url
         // and then we will delete the product from the database or any other source
         // We will use the ProductService to delete the product by id
         productService.deleteProduct(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Product deleted successfully id: " + id);
     }
 
     @PatchMapping("/{id}")
-    public GetProductDTO updateProduct(@PathVariable("id") Long id, @RequestBody CreateProductDTO createProductDTO){
+    public ResponseEntity<GetProductDTO> updateProduct(@PathVariable("id") Long id, @RequestBody CreateProductDTO createProductDTO){
         // This method will update the product with the given id
         // We will use @PathVariable to get the id from the url
         // and then we will update the product in the database or any other source
@@ -92,7 +95,7 @@ public class ProductController {
 
         Product updatedProduct = productService.updateProduct(id, CreateProductDTO.toProduct(createProductDTO));
 
-        return GetProductDTO.fromProduct(updatedProduct);
+        return ResponseEntity.status(HttpStatus.OK).body(GetProductDTO.fromProduct(updatedProduct));
 
     }
 
