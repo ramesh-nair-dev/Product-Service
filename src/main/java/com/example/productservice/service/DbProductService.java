@@ -1,5 +1,6 @@
 package com.example.productservice.service;
 
+import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
 import com.example.productservice.repository.CategoryRepository;
@@ -106,10 +107,10 @@ public class DbProductService implements ProductService {
     }
 
     @Override
-    public Product getSingleProduct(Long id) {
+    public Product getSingleProduct(Long id) throws ProductNotFoundException{
         Optional<Product> productOptional = productRepository.findById(id);
         if(productOptional.isEmpty()){
-            throw  new RuntimeException("Product with id " + id + " not found");
+            throw new ProductNotFoundException(String.valueOf(id));
         }
         return productOptional.get();
     }

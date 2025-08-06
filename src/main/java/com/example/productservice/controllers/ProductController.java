@@ -1,6 +1,7 @@
 package com.example.productservice.controllers;
 
 import com.example.productservice.dtos.product.*;
+import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Product;
 import com.example.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,7 +63,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetProductDTO> getSingleProduct(@PathVariable("id") Long id){
+    public ResponseEntity<GetProductDTO> getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         // This method will return the product with the given id
         // We will use @PathVariable to get the id from the url
         // and then we will return the product from the database or any other source
