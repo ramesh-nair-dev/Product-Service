@@ -41,7 +41,7 @@ public class DbProductService implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Long id , Product product) {
+    public Product updateProduct(Long id , Product product) throws ProductNotFoundException {
         /**
          * How we will update the product?
          * 1. We will first check if the product with the given id exists in the database.
@@ -54,7 +54,7 @@ public class DbProductService implements ProductService {
 
         Optional<Product> productOptional = productRepository.findById(id);
         if(productOptional.isEmpty()){
-            throw new RuntimeException("Product with id " + id + " not found");
+            throw new ProductNotFoundException(String.valueOf(id));
         }
         Product existingProduct = productOptional.get();
         if(product.getProductTitle() != null){
@@ -116,10 +116,10 @@ public class DbProductService implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Long id) {
+    public void deleteProduct(Long id) throws ProductNotFoundException {
         Optional<Product> productOptional = productRepository.findById(id);
         if(productOptional.isEmpty()){
-            throw new RuntimeException("Product with id " + id + " not found");
+            throw new ProductNotFoundException(String.valueOf(id));
         }
         productRepository.deleteById(id);
     }
