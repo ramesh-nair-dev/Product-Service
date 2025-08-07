@@ -75,7 +75,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id){
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         // This method will delete the product with the given id
         // We will use @PathVariable to get the id from the url
         // and then we will delete the product from the database or any other source
@@ -85,7 +85,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<GetProductDTO> updateProduct(@PathVariable("id") Long id, @RequestBody CreateProductDTO createProductDTO){
+    public ResponseEntity<GetProductDTO> updateProduct(@PathVariable("id") Long id, @RequestBody CreateProductDTO createProductDTO) throws ProductNotFoundException {
         // This method will update the product with the given id
         // We will use @PathVariable to get the id from the url
         // and then we will update the product in the database or any other source
