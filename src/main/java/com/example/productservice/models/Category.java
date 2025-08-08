@@ -17,8 +17,6 @@ public class Category extends BaseClass{
     private String categoryDescription;
     @OneToMany(mappedBy = "category")
     private List<Product> allProducts;
-    @OneToMany
-    private List<Product> topProducts;
     @OneToOne
     private SubCategory subCategory;
 }
