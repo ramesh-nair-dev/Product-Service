@@ -1,5 +1,6 @@
 package com.example.productservice.controllers;
 
+import com.example.productservice.dtos.product.GetAllProductResponseDTO;
 import com.example.productservice.dtos.product.GetProductDTO;
 import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Category;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -65,5 +69,51 @@ class ProductControllerTest {
         } catch (ProductNotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Product not found");
         }
+    }
+
+    @Test
+    void getAllProducts() {
+        //Arrange
+        List<Product> productList = new ArrayList<>();
+        Category category = new Category();
+        category.setCategoryName("Electronics");
+        Product product1 = new Product();
+        product1.setId(1L);
+        product1.setProductTitle("Product 1");
+        product1.setProductDescription("Description 1");
+        product1.setCategory(category);
+        product1.setProductPrice(50.0);
+
+        Product product2 = new Product();
+        product2.setId(2L);
+        product2.setProductTitle("Product 2");
+        product2.setProductDescription("Description 2");
+        product2.setCategory(category);
+        product2.setProductPrice(75.0);
+
+        productList.add(product1);
+        productList.add(product2);
+
+        GetAllProductResponseDTO expectedResponse = new GetAllProductResponseDTO();
+
+        List<GetProductDTO> expectedGetProductDTOList = new ArrayList<>();
+
+        for(Product product : productList) {
+            expectedGetProductDTOList.add(GetProductDTO.fromProduct(product));
+        }
+
+        expectedResponse.setGetProductDTOList(expectedGetProductDTOList);
+
+        when(productService.getAllProducts()).thenReturn(productList);
+
+        // Act
+        ResponseEntity<GetAllProductResponseDTO> response = productController.getAllProducts();
+
+        // Assert
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getGetProductDTOList()).isNotNull();
+        assertThat(response.getBody().getGetProductDTOList().size()).isEqualTo(expectedGetProductDTOList.size());
+
     }
 }
