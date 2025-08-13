@@ -52,4 +52,18 @@ class ProductControllerTest {
         assertThat(response.getBody().getProductCategoryName()).isEqualTo("Electronics");
 
     }
+
+    @Test
+    void getSingleProductNotFound() throws ProductNotFoundException {
+        // Arrange
+        Long productId = 999L; // Non-existent product ID
+        when(productService.getSingleProduct(productId)).thenThrow(new ProductNotFoundException("Product not found"));
+
+        // Act & Assert
+        try {
+            productController.getSingleProduct(productId);
+        } catch (ProductNotFoundException e) {
+            assertThat(e.getMessage()).isEqualTo("Product not found");
+        }
+    }
 }
