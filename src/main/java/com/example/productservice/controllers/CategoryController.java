@@ -65,4 +65,15 @@ public class CategoryController {
         responseDTO.setCategories(responseList);
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<CreateCategoryResponseDTO> updateCategory(@RequestBody CreateCategoryRequestDTO createCategoryRequestDTO, @PathVariable("id") Long id) throws CategoryNotFoundException {
+        // Method to update a category
+        // This method will handle PATCH requests to update an existing category
+        // We can use @PatchMapping("/{id}") to handle requests with a specific category ID
+        // We would typically call a service method to update the category in the database
+
+        Category category = categoryService.updateCategory(id,CreateCategoryRequestDTO.toCategory(createCategoryRequestDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(CreateCategoryResponseDTO.fromCategory(category));
+    }
 }

@@ -49,5 +49,25 @@ public class DbCategoryService implements CategoryService {
         return categoryList;
     }
 
+    @Override
+    public Category updateCategory(Long categoryId, Category category) throws CategoryNotFoundException {
+    if (categoryId == null || category == null) {
+        throw new RuntimeException("Category ID and category cannot be null");
+    }
+    Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+    if (categoryOptional.isEmpty()) {
+        throw new CategoryNotFoundException("Category with ID " + categoryId + " not found");
+    }
+    Category existingCategory = categoryOptional.get();
+
+    if(category.getCategoryName() != null){
+        existingCategory.setCategoryName(category.getCategoryName());
+    }
+    if(category.getCategoryDescription() != null){
+        existingCategory.setCategoryDescription(category.getCategoryDescription());
+    }
+    return categoryRepository.save(existingCategory);
+    }
+
 
 }
