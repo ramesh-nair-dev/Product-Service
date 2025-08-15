@@ -1,8 +1,10 @@
 package com.example.productservice.controllerAdvice;
 
-import com.example.productservice.dtos.ExceptionDTO;
-import com.example.productservice.dtos.ProductNotFoundExceptionDTO;
+import com.example.productservice.dtos.exception.CategoryNotFoundExceptionDTO;
+import com.example.productservice.dtos.exception.ExceptionDTO;
+import com.example.productservice.dtos.exception.ProductNotFoundExceptionDTO;
 import com.example.productservice.dtos.ResponseStatus;
+import com.example.productservice.exceptions.CategoryNotFoundException;
 import com.example.productservice.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +40,16 @@ public class ProductServiceExceptionHandler {
         productNotFoundExceptionDTO.setResponseStatus(ResponseStatus.Failure);
         productNotFoundExceptionDTO.setResolutionDetails("Please check the product ID and try again.");
         return new ResponseEntity<>(productNotFoundExceptionDTO, HttpStatus.NOT_FOUND);
+    }
 
-
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<CategoryNotFoundExceptionDTO> handleCategoryNotFoundException(Exception e){
+        // This method will handle CategoryNotFoundException
+        // We can log the exception, return a custom error response, etc.
+        CategoryNotFoundExceptionDTO categoryNotFoundExceptionDTO = new CategoryNotFoundExceptionDTO();
+        categoryNotFoundExceptionDTO.setMessage(e.getMessage());
+        categoryNotFoundExceptionDTO.setResponseStatus(ResponseStatus.Failure);
+        categoryNotFoundExceptionDTO.setResolutionDetails("Please check the category ID and try again.");
+        return new ResponseEntity<>(categoryNotFoundExceptionDTO, HttpStatus.NOT_FOUND);
     }
 }

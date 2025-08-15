@@ -1,5 +1,6 @@
-package com.example.productservice.dtos;
+package com.example.productservice.dtos.exception;
 
+import com.example.productservice.dtos.ResponseStatus;
 import lombok.Getter;
 import lombok.Setter;
 
