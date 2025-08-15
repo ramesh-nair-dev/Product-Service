@@ -76,4 +76,15 @@ public class CategoryController {
         Category category = categoryService.updateCategory(id,CreateCategoryRequestDTO.toCategory(createCategoryRequestDTO));
         return ResponseEntity.status(HttpStatus.OK).body(CreateCategoryResponseDTO.fromCategory(category));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCategory(@PathVariable("id") Long id) throws CategoryNotFoundException {
+        // Method to delete a category
+        // This method will handle DELETE requests to remove a category
+        // We can use @DeleteMapping("/{id}") to handle requests with a specific category ID
+        // We would typically call a service method to delete the category from the database
+
+        categoryService.deleteCategory(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Category deleted successfully with ID: " + id);
+    }
 }

@@ -69,5 +69,18 @@ public class DbCategoryService implements CategoryService {
     return categoryRepository.save(existingCategory);
     }
 
+    @Override
+    public void deleteCategory(Long categoryId) throws CategoryNotFoundException {
+        if(categoryId == null) {
+            throw new RuntimeException("Category ID cannot be null");
+        }
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+        if (categoryOptional.isEmpty()) {
+            throw new CategoryNotFoundException("Category with ID " + categoryId + " not found");
+        }
+        // If the category exists, we proceed to delete it
+        categoryRepository.deleteById(categoryId);
+    }
+
 
 }
