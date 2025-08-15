@@ -2,6 +2,7 @@ package com.example.productservice.controllers;
 
 import com.example.productservice.dtos.category.CreateCategoryRequestDTO;
 import com.example.productservice.dtos.category.CreateCategoryResponseDTO;
+import com.example.productservice.dtos.category.GetAllCategoryDTO;
 import com.example.productservice.dtos.category.GetCategoryDTO;
 import com.example.productservice.exceptions.CategoryNotFoundException;
 import com.example.productservice.models.Category;
@@ -9,6 +10,9 @@ import com.example.productservice.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
@@ -41,8 +45,24 @@ public class CategoryController {
         // This method will handle GET requests to retrieve a single category
         // We can use @GetMapping("/{id}") to handle requests with a specific category ID
         // We would typically call a service method to retrieve the category from the database
-
         Category category = categoryService.getSingleCategory(id);
         return ResponseEntity.status(HttpStatus.OK).body(GetCategoryDTO.fromCategory(category));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<GetAllCategoryDTO> getAllCategories(){
+        // Method to get all categories
+        // This method will handle GET requests to retrieve all categories
+        // We can use @GetMapping("") to handle requests without a specific category ID
+        // We would typically call a service method to retrieve all categories from the database
+
+        GetAllCategoryDTO responseDTO = new GetAllCategoryDTO();
+        List<GetCategoryDTO> responseList = new ArrayList<>();
+        List<Category> categoryList = categoryService.getAllCategories();
+        for(Category category : categoryList){
+            responseList.add(GetCategoryDTO.fromCategory(category));
+        }
+        responseDTO.setCategories(responseList);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 }

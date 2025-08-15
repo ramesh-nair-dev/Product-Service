@@ -5,6 +5,7 @@ import com.example.productservice.models.Category;
 import com.example.productservice.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,15 @@ public class DbCategoryService implements CategoryService {
             throw new CategoryNotFoundException("Category with ID " + categoryId + " not found");
         }
         return categoryOptional.get();
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        List<Category> categoryList = categoryRepository.findAll();
+        if(categoryList.isEmpty()) {
+            throw new RuntimeException("No categories found");
+        }
+        return categoryList;
     }
 
 
