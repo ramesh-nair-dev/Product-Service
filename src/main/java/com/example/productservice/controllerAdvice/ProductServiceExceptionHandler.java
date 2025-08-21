@@ -6,6 +6,7 @@ import com.example.productservice.dtos.exception.ProductNotFoundExceptionDTO;
 import com.example.productservice.dtos.ResponseStatus;
 import com.example.productservice.exceptions.CategoryNotFoundException;
 import com.example.productservice.exceptions.ProductNotFoundException;
+import com.example.productservice.exceptions.UnAuthorisedAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -51,5 +52,15 @@ public class ProductServiceExceptionHandler {
         categoryNotFoundExceptionDTO.setResponseStatus(ResponseStatus.Failure);
         categoryNotFoundExceptionDTO.setResolutionDetails("Please check the category ID and try again.");
         return new ResponseEntity<>(categoryNotFoundExceptionDTO, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(UnAuthorisedAccessException.class)
+    public ResponseEntity<ExceptionDTO> handleUnAuthorisedAccessException(Exception e){
+        // This method will handle UnAuthorisedAccessException
+        // We can log the exception, return a custom error response, etc.
+        ExceptionDTO exceptionDTO = new ExceptionDTO();
+        exceptionDTO.setMessage(e.getMessage());
+        exceptionDTO.setResponseStatus(ResponseStatus.Failure);
+        exceptionDTO.setResolutionDetails("You are not authorised to access this resource. Please check your credentials and try again.");
+        return new ResponseEntity<>(exceptionDTO, HttpStatus.UNAUTHORIZED);
     }
 }

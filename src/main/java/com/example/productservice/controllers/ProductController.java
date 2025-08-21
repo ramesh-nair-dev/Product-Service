@@ -1,7 +1,10 @@
 package com.example.productservice.controllers;
 
+import com.example.productservice.commons.AuthCommon;
+import com.example.productservice.dtos.auth.UserDTO;
 import com.example.productservice.dtos.product.*;
 import com.example.productservice.exceptions.ProductNotFoundException;
+import com.example.productservice.exceptions.UnAuthorisedAccessException;
 import com.example.productservice.models.Product;
 import com.example.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,12 +21,15 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final AuthCommon authCommon;
 
 
     public ProductController(
             @Value("${app.service.bean-name}") String serviceName,
-            ApplicationContext context) {
+            ApplicationContext context,
+            AuthCommon authCommon) {
         this.productService = (ProductService) context.getBean(serviceName);
+        this.authCommon = authCommon;
     }
 
     @PostMapping("")
@@ -63,12 +69,18 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetProductDTO> getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+    public ResponseEntity<GetProductDTO> getSingleProduct(@PathVariable("id") Long id, @RequestHeader("token") String token) throws ProductNotFoundException, UnAuthorisedAccessException {
         // This method will return the product with the given id
         // We will use @PathVariable to get the id from the url
         // and then we will return the product from the database or any other source
         // We will use the ProductService to get the product by id
 
+
+        UserDTO user = authCommon.validateToken(token);
+        System.out.println("User: "+ user);
+        if(user == null){
+            throw new UnAuthorisedAccessException("You are not authorised to access this resource");
+        }
         Product product = productService.getSingleProduct(id);
         return ResponseEntity.status(HttpStatus.OK).body(GetProductDTO.fromProduct(product));
 

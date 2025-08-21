@@ -3,6 +3,7 @@ package com.example.productservice.service;
 import com.example.productservice.dtos.fakeStore.FakeStoreCreateProductRequestDTO;
 import com.example.productservice.dtos.fakeStore.FakeStoreCreateProductResponseDTO;
 import com.example.productservice.dtos.fakeStore.FakeStoreGetProductResponseDTO;
+import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,6 +78,7 @@ public class FakeApiProductService implements ProductService {
         return FakeStoreCreateProductResponseDTO.toProduct(responseDTO);
 
     }
+
 
     @Override
     public Product getSingleProduct(Long id) {

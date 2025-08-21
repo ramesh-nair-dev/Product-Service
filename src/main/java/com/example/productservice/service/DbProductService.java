@@ -1,11 +1,15 @@
 package com.example.productservice.service;
 
+import com.example.productservice.commons.AuthCommon;
+import com.example.productservice.dtos.auth.UserDTO;
 import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
 import com.example.productservice.repository.CategoryRepository;
 import com.example.productservice.repository.ProductRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +19,11 @@ public class DbProductService implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
-    public DbProductService(ProductRepository productRepository , CategoryRepository categoryRepository) {
+
+    public DbProductService(
+            ProductRepository productRepository ,
+            CategoryRepository categoryRepository
+    ) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
     }
@@ -80,6 +88,8 @@ public class DbProductService implements ProductService {
         return productRepository.save(existingProduct);
     }
 
+
+
     private void CategoryCreation(Product product, Product existingProduct) {
         String categoryName = product.getCategory().getCategoryName();
         // We have getting product object from the controller from that product object we are getting category name
@@ -108,6 +118,7 @@ public class DbProductService implements ProductService {
 
     @Override
     public Product getSingleProduct(Long id) throws ProductNotFoundException{
+        // First we will validate the token
         Optional<Product> productOptional = productRepository.findById(id);
         if(productOptional.isEmpty()){
             throw new ProductNotFoundException(String.valueOf(id));
