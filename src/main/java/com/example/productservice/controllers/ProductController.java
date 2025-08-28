@@ -69,18 +69,15 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetProductDTO> getSingleProduct(@PathVariable("id") Long id, @RequestHeader("token") String token) throws ProductNotFoundException, UnAuthorisedAccessException {
+    public ResponseEntity<GetProductDTO> getSingleProduct(
+            @PathVariable("id") Long id
+    ) throws ProductNotFoundException{
+
         // This method will return the product with the given id
         // We will use @PathVariable to get the id from the url
         // and then we will return the product from the database or any other source
         // We will use the ProductService to get the product by id
 
-
-        UserDTO user = authCommon.validateToken(token);
-        System.out.println("User: "+ user);
-        if(user == null){
-            throw new UnAuthorisedAccessException("You are not authorised to access this resource");
-        }
         Product product = productService.getSingleProduct(id);
         return ResponseEntity.status(HttpStatus.OK).body(GetProductDTO.fromProduct(product));
 
