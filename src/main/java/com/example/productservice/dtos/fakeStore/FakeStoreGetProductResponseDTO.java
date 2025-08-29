@@ -13,17 +13,19 @@ public class FakeStoreGetProductResponseDTO {
     private String title;
     private double price;
     private String description;
-    private Category category;
+    private String category;
     private String image;
 
 
     public static Product toProduct(FakeStoreGetProductResponseDTO fakeStoreGetProductResponseDTO) {
         Product product = new Product();
+        Category category = new Category();
+        category.setCategoryName(fakeStoreGetProductResponseDTO.getCategory());
         product.setId(fakeStoreGetProductResponseDTO.getId());
         product.setProductTitle(fakeStoreGetProductResponseDTO.getTitle());
         product.setProductPrice(fakeStoreGetProductResponseDTO.getPrice());
         product.setProductDescription(fakeStoreGetProductResponseDTO.getDescription());
-        product.setCategory(fakeStoreGetProductResponseDTO.getCategory());
+        product.setCategory(category);
         product.setProductImage(fakeStoreGetProductResponseDTO.getImage());
         return product;
     }
