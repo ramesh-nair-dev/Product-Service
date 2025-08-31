@@ -33,7 +33,9 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public ResponseEntity<CreateProductResponseDTO> createProduct(@RequestBody CreateProductRequestDTO createProductRequestDTO) {
+    public ResponseEntity<CreateProductResponseDTO> createProduct(
+            @RequestBody CreateProductRequestDTO createProductRequestDTO
+    ) {
         // This method will create a new product
         // We will use @PostMapping to handle POST requests
         // and create a new product in the database or any other source
@@ -43,6 +45,8 @@ public class ProductController {
         Product product = productService.createProduct(createProductRequestDTO.toProduct());
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateProductResponseDTO.fromProduct(product));
     }
+
+
 
     @GetMapping("")
     public ResponseEntity<GetAllProductResponseDTO> getAllProducts(){
