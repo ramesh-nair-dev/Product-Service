@@ -2,7 +2,10 @@ package com.example.productservice.repository;
 
 import com.example.productservice.models.Product;
 import com.example.productservice.service.CustomQueries;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -10,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Long> {
+public interface ProductRepository extends JpaRepository<Product,Long> , JpaSpecificationExecutor<Product> {
     // JpaRepository provides methods for CRUD operations
     // No additional methods are needed unless specific queries are required
     /**
@@ -42,9 +45,13 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     // We can also write custom native SQL queries if needed
     @Query(value= CustomQueries.GET_ALL_PRODUCTS_BY_CATEGORY_NAME, nativeQuery = true)
     List<Product> customNativeQuery(@Param("categoryName") String categoryName);
+
+    Page<Product> findByProductTitleContainingIgnoreCase(String productTitle , Pageable pageable);
     // This method uses a custom native SQL query to retrieve products by category name
     // It uses the @Query annotation with nativeQuery = true to indicate that the query is a native SQL query
     // The query is defined in the CustomQueries interface, which can be used to centralize custom queries
     // The @Param annotation is used to bind the method parameter to the query parameter
+
+
 
 }
