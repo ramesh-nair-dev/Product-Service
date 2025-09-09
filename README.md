@@ -45,7 +45,7 @@ This separation ensures **maintainability, testability, and scalability** — fo
 ---
 
 ## 📂 Project Structure
-```
+
 
 Product-Service/
 ├── controllers/       # REST API endpoints
@@ -55,7 +55,6 @@ Product-Service/
 ├── exceptions/        # Centralized error handling
 └── resources/         # Configurations
 
-````
 
 ---
 
@@ -64,7 +63,7 @@ Product-Service/
    ```bash
    git clone https://github.com/your-username/Product-Service.git
    cd Product-Service
-````
+   ```
 
 2. Configure database in `application.properties`.
 3. Run the service:
@@ -73,11 +72,9 @@ Product-Service/
    mvn spring-boot:run
    ```
 4. Access API at:
-
    ```
    http://localhost:8080/products
    ```
-
 ---
 
 ## 🔮 Future Enhancements
